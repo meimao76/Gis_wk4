@@ -10,8 +10,9 @@ library(countrycode)
 library(tmap)
 ```
 #how to do the homework
+
 * read the “All composite indices and components time series (1990-2021)”
-* select global gender inequality index(GII) and 2010GII,2019GII from the csv.
+* select name and iso3 and global gender inequality index(GII) from the csv.
 * read the geojson World Countries Generalized
 * join the difeference datafram into geojson with label
 * creating a new column of difference in inequality between 2010 and 2019
