@@ -10,6 +10,7 @@ library(countrycode)
 library(tmap)
 ```
 #how to do the homework
+task:Join the global gender inequality index to spatial data of the World, creating a new column of difference in inequality between 2010 and 2019.
 
 * read the “All composite indices and components time series (1990-2021)”
 * select name and iso3 and global gender inequality index(GII) from the csv.
