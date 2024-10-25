@@ -1,0 +1,66 @@
+```{r}
+library(sf)
+library(here)
+library(janitor)
+library(tidyverse)
+library(terra)
+library(ggplot2)
+library(stringr)
+library(countrycode)
+library(tmap)
+```
+#how to do the homework
+* read the “All composite indices and components time series (1990-2021)”
+* select global gender inequality index(GII) and 2010GII,2019GII from the csv.
+* read the geojson World Countries Generalized
+* join the difeference datafram into geojson with label
+* creating a new column of difference in inequality between 2010 and 2019
+* plot 
+Read in csv data
+```{r}
+all_composite_indices <- read_csv("work4_data/All_Composite_indices_complete_time_series.csv")  
+summary(all_composite_indices)
+head(all_composite_indices)
+# select GII data
+gill_world <- all_composite_indices %>%
+  dplyr::select(c(1:2,614:646))%>%
+  dplyr::mutate(gii_diff= gii_2010-gii_2019)%>%
+  dplyr::mutate(iso2= countrycode(iso3, "iso3c", "iso2c"))
+print(gill_world)
+
+```
+read geojson data
+
+```{r}
+world_countries <- st_read("work4_data/World_Countries.geojson")
+```
+join the difeference datafram into geojson with country
+use the countrycode to be the match index
+```{r}
+gill_map <- world_countries%>%
+  dplyr::left_join(.,
+            gill_world,
+             by = c("ISO" = "iso2"))
+head(gill_map)
+
+plot(gill_map[10:40])
+```
+plot the map
+attention all the files are polygons
+```{r}
+tmap_mode("plot")
+
+tm_shape(world_countries)+
+tm_polygons()+
+tm_shape(gill_map) + 
+tm_polygons("gii_diff", 
+        style="pretty",
+        palette="Blues",
+        midpoint=NA,
+        title="Number of years",
+        alpha = 0.5) + 
+  tm_compass(position = c("left", "bottom"),type = "arrow") + 
+  tm_scale_bar(position = c("left", "bottom")) +
+  tm_layout(title = "difference in inequality between 2010 and 2019", legend.position = c("right", "bottom"))
+```
+
