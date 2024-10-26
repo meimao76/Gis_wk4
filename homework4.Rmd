@@ -21,7 +21,7 @@ task:Join the global gender inequality index to spatial data of the World, creat
 Read in csv data
 ```{r}
 all_composite_indices <- read_csv("work4_data/All_Composite_indices_complete_time_series.csv")  
-summary(all_composite_indices)
+
 head(all_composite_indices)
 # select GII data
 gill_world <- all_composite_indices %>%
