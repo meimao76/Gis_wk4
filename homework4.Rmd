@@ -66,3 +66,11 @@ tm_polygons("gii_diff",
   tm_layout(title = "difference in inequality between 2010 and 2019", legend.position = c("right", "bottom"))
 ```
 
+动态地图基础
+```{r}
+tmap::tmap_mode("view") 
+breaks <- c(-Inf,0,0.1,0.2,0.3,0.4,0.5,Inf)
+tm_shape(gill_map) +
+  tm_polygons("gii_diff", 
+              breaks = breaks)
+```
